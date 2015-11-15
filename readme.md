@@ -93,3 +93,5 @@ module.exports = {
 As for now we'll be using `react-hot-loader` to achieve hot module replacement.
 
 In near future take a look at `babel-plugin-react-transform, react-transform-hmr`
+
+### Open localhost:8080/webpack-dev-server/ ###
