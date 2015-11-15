@@ -1,4 +1,4 @@
-# JavaScript Modern Application workflow development #
+# JavaScript Modern Application development workflow #
 
 ### Init project  ###
 
@@ -57,8 +57,9 @@ Open **localhost:8080**.
 module.exports = {
   entry: [
     'babel-polyfill',
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
     './src/main.js',
-    'webpack-dev-server/client?http://localhost:8080'
   ],
   output: {
     filename: 'bundle.js'
@@ -68,16 +69,27 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: ['babel'],
-        query: {
-          presets: ['es2015', 'stage-0', 'react'],
-        }
+        loaders: ['react-hot', 'babel']
       }
     ]
   }
 }
 ```
 
+### Babel configuration file ###
+
+```
+{
+  "presets": ["es2015", "stage-0", "react"]
+}
+```
+
 ### React ###
 
 `npm install react react-dom --save`
+
+### Enabling Hot Module Replacement (HMR) ###
+
+As for now we'll be using `react-hot-loader` to achieve hot module replacement.
+
+In near future take a look at `babel-plugin-react-transform, react-transform-hmr`

@@ -1,36 +1,45 @@
 'use strict';
 
 var path = require('path');
+var webpack = require('webpack');
+
+var SRC_PATH = path.join(__dirname, 'src');
 
 module.exports = {
+  debug: true,
+  devtool: 'source-map',
   entry: [
     'babel-polyfill',
-    './src/main.js',
-    'webpack-dev-server/client?http://localhost:8080'
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
+    './src/main.js'
   ],
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
   output: {
-    //publicPath: '/build',
+    publicPath: '/static/',
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
-  devtool: 'source-map',
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: path.join(__dirname, 'src'),
+        include: SRC_PATH,
         exclude: /node_modules/,
-        loader: ['babel'],
-        query: {
-          presets: ['es2015', 'stage-0', 'react'],
-        }
+        loaders: ['react-hot', 'babel']
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style', 'css'],
+        include: SRC_PATH
       }
     ]
   },
-  debug: true,
   devServer: {
     contentBase: "./src"
   }
