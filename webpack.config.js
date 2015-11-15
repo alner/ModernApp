@@ -8,9 +8,12 @@ module.exports = {
     './src/main.js',
     'webpack-dev-server/client?http://localhost:8080'
   ],
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   output: {
     //publicPath: '/build',
-    //path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   devtool: 'source-map',
@@ -19,9 +22,10 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: path.join(__dirname, 'src'),
+        exclude: /node_modules/,
         loader: ['babel'],
         query: {
-          presets: ["es2015"],
+          presets: ['es2015', 'stage-0', 'react'],
         }
       }
     ]
